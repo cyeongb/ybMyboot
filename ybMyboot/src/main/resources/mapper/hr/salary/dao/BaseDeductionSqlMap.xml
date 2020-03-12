@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.hr.salary.dao.BaseDeductionDAO">
+	
+	<select id="selectBaseDeductionList" resultType="com.google.ybMyboot.hr.salary.to.BaseDeductionTO">
+		<![CDATA[
+		SELECT DEDUCTION_CODE
+		, DEDUCTION_NAME
+		, RATIO		
+		FROM BASE_DEDUCTION
+		]]>
+	</select>
+	
+	<insert id="insertBaseDeduction" parameterType="com.google.ybMyboot.hr.salary.to.BaseDeductionTO">
+		<![CDATA[
+		INSERT INTO BASE_DEDUCTION VALUES (
+		#{deductionCode}, 
+		#{deductionName}, 
+		#{ratio}
+		)
+		]]>
+	</insert>
+	
+	<update id="updateBaseDeduction" parameterType="com.google.ybMyboot.hr.salary.to.BaseDeductionTO">
+		<![CDATA[
+		UPDATE BASE_DEDUCTION SET 
+		DEDUCTION_NAME = #{deductionName}
+		, RATIO = #{ratio}
+		WHERE DEDUCTION_CODE = #{deductionCode}
+		]]>
+	</update>
+	
+	<delete id="deleteBaseDeduction" parameterType="com.google.ybMyboot.hr.salary.to.BaseDeductionTO">
+		<![CDATA[
+		DELETE FROM BASE_DEDUCTION
+		WHERE DEDUCTION_CODE = #{deductionCode}
+		]]>
+	</delete>
+	
+</mapper>

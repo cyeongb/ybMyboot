@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.hr.attd.dao.MonthAttdMgtDAO">
+
+	<parameterMap type="map" id="monthAttdMgtParameter" >
+      <parameter property="applyYearMonth" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+      <parameter property="dept" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+      <parameter property="result" jdbcType="CURSOR" javaType="java.sql.ResultSet" mode="IN" resultMap="monthAttdMgtParameter"/>
+    
+      <parameter property="errorCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" />
+      <parameter property="errorMsg" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" />
+	</parameterMap>	
+	
+	<select id="batchMonthAttdMgtProcess" parameterMap="monthAttdMgtParameter" resultType="com.google.ybMyboot.hr.attd.to.MonthAttdMgtTO" statementType="CALLABLE">
+		<![CDATA[
+			{call P_HR_ATTENDANCE.P_CREATE_MONTH_ATTD_MANAGE(?,?,?,?,?)}
+    	]]>
+	</select>
+	
+	<update id="updateMonthAttdMgtList" parameterType="com.google.ybMyboot.hr.attd.to.MonthAttdMgtTO">
+		<![CDATA[
+			UPDATE MONTH_ATTD_MANAGE 
+			SET FINALIZE_STATUS = #{finalizeStatus}
+			WHERE EMP_CODE = #{empCode}
+			AND APPLY_YEAR_MONTH = #{applyYearMonth} 
+    	]]>
+	</update>
+</mapper>

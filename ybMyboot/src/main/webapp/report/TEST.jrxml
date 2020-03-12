@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TEST" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1c40ac7b-ecec-42dc-9d23-ce61a68b4b51">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT E.EMP_NAME as empName, TO_CHAR(W.HIREDATE,'YYYY')||'NYUN ' ||TO_CHAR(W.HIREDATE, 'MON')||TO_CHAR(W.HIREDATE,'DD')||'ILL' as hiredate
+          , W.OCCUPATION as occupation, W.EMPLOYMENT_TYPE as employmentType, P.POSITION as position 
+   , E.ADDRESS as address , E.DETAIL_ADDRESS as detailAddress , T.DEPT_NAME as deptName   
+   FROM EMP E , WORK_INFO W, DEPT T, POSITION P       
+WHERE E.EMP_CODE=W.EMP_CODE AND E.DEPT_CODE=T.DEPT_CODE      
+            AND E.POSITION_CODE=P.POSITION_CODE AND E.EMP_CODE = 'A560100']]>
+	</queryString>
+	<field name="EMPNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EMPNAME"/>
+	</field>
+	<field name="HIREDATE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="HIREDATE"/>
+	</field>
+	<field name="OCCUPATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OCCUPATION"/>
+	</field>
+	<field name="EMPLOYMENTTYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EMPLOYMENTTYPE"/>
+	</field>
+	<field name="POSITION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="POSITION"/>
+	</field>
+	<field name="ADDRESS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ADDRESS"/>
+	</field>
+	<field name="DETAILADDRESS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DETAILADDRESS"/>
+	</field>
+	<field name="DEPTNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DEPTNAME"/>
+	</field>
+	<group name="EMPNAME">
+		<groupExpression><![CDATA[$F{EMPNAME}]]></groupExpression>
+	</group>
+	<group name="HIREDATE">
+		<groupExpression><![CDATA[$F{HIREDATE}]]></groupExpression>
+	</group>
+	<group name="OCCUPATION">
+		<groupExpression><![CDATA[$F{OCCUPATION}]]></groupExpression>
+	</group>
+	<group name="EMPLOYMENTTYPE">
+		<groupExpression><![CDATA[$F{EMPLOYMENTTYPE}]]></groupExpression>
+	</group>
+	<group name="POSITION">
+		<groupExpression><![CDATA[$F{POSITION}]]></groupExpression>
+	</group>
+	<group name="ADDRESS">
+		<groupExpression><![CDATA[$F{ADDRESS}]]></groupExpression>
+	</group>
+	<group name="DETAILADDRESS">
+		<groupExpression><![CDATA[$F{DETAILADDRESS}]]></groupExpression>
+	</group>
+	<group name="DEPTNAME">
+		<groupExpression><![CDATA[$F{DEPTNAME}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="238" y="0" width="100" height="30" uuid="174efe6b-d136-4244-b0a3-498811c11881">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38587a02-a091-415e-8177-1b55508deb0f"/>
+				</reportElement>
+				<text><![CDATA[EMPNAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="0" width="100" height="30" uuid="979cc0ed-8b51-4e1c-b6a5-f64bd20c56df">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c87e5305-7b34-4112-8dd3-90c3a19db2bb"/>
+				</reportElement>
+				<text><![CDATA[HIREDATE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="238" y="10" width="100" height="30" uuid="d42ce25b-624b-4e1d-8147-16fe09be3a5f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38587a02-a091-415e-8177-1b55508deb0f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{EMPNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="286" y="57" width="100" height="30" uuid="d72d7a9c-c8ea-453b-a057-0fff43c12079">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c87e5305-7b34-4112-8dd3-90c3a19db2bb"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{HIREDATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

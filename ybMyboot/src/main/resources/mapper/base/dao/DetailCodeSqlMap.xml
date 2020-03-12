@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.bootjun.base.dao.DetailCodeDAO">
+
+	<select id="selectDetailCodeList" parameterType="String"  resultType="com.google.ybMyboot.base.to.DetailCodeTO">
+		<![CDATA[
+			SELECT DETAIL_CODE_NUMBER
+				, CODE_NUMBER
+				, DETAIL_CODE_NAME
+				, DETAIL_CODE_NAMEUSING
+			FROM DETAIL_CODE
+			WHERE CODE_NUMBER = #{codeNumber}
+        ]]>
+	</select>
+	
+	<select id="selectDetailCodeListRest" parameterType="HashMap" resultType="com.google.ybMyboot.base.to.DetailCodeTO">
+		<![CDATA[
+			SELECT DETAIL_CODE_NUMBER
+				, CODE_NUMBER
+				, DETAIL_CODE_NAME
+				, DETAIL_CODE_NAMEUSING 
+			FROM DETAIL_CODE
+			WHERE DETAIL_CODE_NUMBER = #{code1} 
+			OR DETAIL_CODE_NUMBER = #{code2} 
+			OR DETAIL_CODE_NUMBER = #{code3} 
+        ]]>
+	</select>
+	
+	<update id="updateDetailCode" parameterType="com.google.ybMyboot.base.to.DetailCodeTO">
+		<![CDATA[
+			UPDATE DETAIL_CODE 
+			SET CODE_NUMBER = #{codeNumber}
+			   ,DETAIL_CODE_NAME = #{detailCodeName}
+			   ,DETAIL_CODE_NAMEUSING = #{detailCodeNameusing}
+			WHERE DETAIL_CODE_NUMBER = #{detailCodeNumber}
+        ]]>
+	</update>
+	
+	<insert id="registDetailCode" parameterType="com.google.ybMyboot.base.to.DetailCodeTO">
+		<![CDATA[
+			INSERT INTO DETAIL_CODE 
+			VALUES( #{detailCodeNumber}
+				  , #{codeNumber}
+				  , #{detailCodeName}
+				  , #{detailCodeNameusing})
+        ]]>
+	</insert>
+	
+	<delete id="deleteDetailCode" parameterType="com.google.ybMyboot.base.to.DetailCodeTO">
+		<![CDATA[
+			DELETE FROM DETAIL_CODE 
+			WHERE DETAIL_CODE_NUMBER = #{detailCodeNumber} 
+			AND DETAIL_CODE_NAME = #{detailCodeName}
+        ]]>
+	</delete>
+	
+</mapper>

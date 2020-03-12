@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.hr.emp.dao.EmpDAO">
+		
+
+	<select  id="selectEmp" resultType="com.google.ybMyboot.hr.emp.to.EmpTO" parameterType="string">
+	<![CDATA[
+		SELECT E.EMP_NAME 
+		, D.DEPT_NAME		
+		, E.DEPT_CODE   
+		, E.POSITION_CODE
+		, P.POSITION
+		, E.GENDER				
+		, E.EMP_CODE				
+		FROM EMP E, POSITION P, DEPT D
+		WHERE EMP_NAME = #{empName}
+		AND E.POSITION_CODE = P.POSITION_CODE
+		AND E.DEPT_CODE = D.DEPT_CODE 
+		]]>	
+	</select>
+
+<!-- 	<select id="selectEmpList" resultMap="empResult"  >
+		SELECT EMP_NAME
+		, DEPT_NAME
+		, POSITION_CODE
+		, GENDER
+		, MOBILE_NUMBER
+		, EMP_CODE
+		, ADDRESS
+		, DETAIL_ADDRESS
+		, BIRTHDATE
+		, POST_NUMBER
+		, IMG_EXTEND
+		, LAST_SCHOOL
+		, EMAIL
+		FROM EMP E, POSITION P, DEPT D
+		WHERE E.POSITION_CODE = P.POSITION_CODE
+		AND E.DEPT_CODE = D.DEPT_CODE 
+	</select>
+
+	<select id="selectEmpListD" resultMap="empResult" parameterType="string"  >
+		SELECT EMP_CODE
+		, EMP_NAME
+		, TO_CHAR(E.BIRTHDATE,'YYYY/MM/DD') BIRTHDATE
+		, GENDER
+		, MOBILE_NUMBER
+		, ADDRESS
+		, DETAIL_ADDRESS
+		, POST_NUMBER
+		, EMAIL
+		, LAST_SCHOOL
+		, IMG_EXTEND
+		, DEPT_NAME
+		, POSITION_CODE
+		FROM EMP E, (SELECT * FROM POSITION P, DEPT D) PD
+		WHERE 1=1
+		AND E.POSITION_CODE = PD.POSITION_CODE(+)
+		AND E.DEPT_CODE = PD.DEPT_CODE(+)
+		AND PD.DEPT_NAME = #{dept}
+	</select>
+	
+	
+
+	<insert id="registEmployee" parameterType="kr.co.seoulit4.hr.emp.to.EmpTO">
+		INSERT INTO EMP VALUES(
+		#{empCode}
+		, #{empName}
+		, TO_DATE(#{birthdate},'YYYY/MM/DD')
+		, #{gender}
+		, #{mobileNumber}
+		, #{address}
+		, #{detailAddress}
+		, #{postNumber}
+		, #{email}
+		, #{lastSchool}
+		, #{imgExtend}
+		, #{deptName}
+		, #{positionCode}
+		)
+	</insert>
+
+	<select id="selectLastEmpCode" resultMap="string"  >
+		SELECT EMP_CODE
+		FROM (SELECT EMP_CODE, 
+			ROWNUM RN 
+			FROM EMP 
+			ORDER BY EMP_CODE DESC) E
+		, (SELECT ROWNUM RN FROM DUAL) D
+		WHERE E.RN = D.RN
+	</select>
+
+	<select id="selectEmpListN" resultMap="empResult" parameterType="string"  >
+		SELECT EMP_CODE
+		, EMP_NAME
+		, TO_CHAR(E.BIRTHDATE,'YYYY/MM/DD') BIRTHDATE
+		, GENDER
+		, MOBILE_NUMBER
+		, ADDRESS
+		, DETAIL_ADDRESS
+		, POST_NUMBER
+		, EMAIL
+		, LAST_SCHOOL
+		, IMG_EXTEND
+		, DEPT_NAME
+		, POSITION_CODE
+		FROM EMP E, (SELECT * FROM POSITION P, DEPT D) PD
+		WHERE 1=1
+		AND E.POSITION_CODE = PD.POSITION_CODE(+)
+		AND E.DEPT_CODE = PD.DEPT_CODE(+)
+		AND E.EMP_NAME = #{name}
+	</select>
+
+	<select id="getEmpCode" resultMap="string" parameterType="string"  >
+		SELECT EMP_CODE
+		FROM EMP
+		WHERE EMP_NAME=#{name}
+	</select>
+
+	<select id="selectEmployee" resultMap="empResult" parameterMap="string" >
+		SELECT EMP_NAME
+		, DEPT_NAME
+		, POSITION_CODE
+		, GENDER
+		, MOBILE_NUMBER
+		, EMP_CODE
+		, ADDRESS
+		, DETAIL_ADDRESS
+		, TO_CHAR(BIRTHDATE) BIRTHDATE
+		, POST_NUMBER
+		, IMG_EXTEND
+		, LAST_SCHOOL
+		, EMAIL 
+		FROM EMP E, POSITION P, DEPT D
+		WHERE E.DEPT_CODE = D.DEPT_CODE 
+		AND E.POSITION_CODE = P.POSITION_CODE
+		AND E.EMP_CODE = #{empCode}
+	</select>
+
+	<update id="updateEmployee" parameterType="kr.co.seoulit4.hr.emp.to.EmpTO">
+		UPDATE EMP SET
+		EMP_NAME = #{empName}
+		, BIRTHDATE = TO_DATE(#{birthdate},'YYYY/MM/DD')
+		, GENDER = #{gender}
+		, MOBILE_NUMBER = #{mobileNumber}
+		, ADDRESS = #{address}
+		, DETAIL_ADDRESS = #{detailAddress}
+		, POST_NUMBER =	#{postNumber}
+		, EMAIL = #{email}
+		, LAST_SCHOOL = #{lastSchool}
+		, IMG_EXTEND = #{imgExtend}
+		, POSITION_CODE = #{positionCode}
+		, DEPT_NAME = #{deptName} 
+		WHERE EMP_CODE = #{empCode}
+	</update>
+ -->
+<!-- 	<Deprecated class="map" id="empDeleteParameter" >
+      <parameter property="empCode" jdbcMap="VARCHAR" javaMap="java.lang.String" mode="IN" />      
+      
+      <parameter property="errorCode" jdbcMap="VARCHAR" javaMap="java.lang.String" mode="OUT" />
+      <parameter property="errorMsg" jdbcMap="VARCHAR" javaMap="java.lang.String" mode="OUT" />
+	</Deprecated>	
+	
+	<procedure id="deleteEmployee" parameterMap="empDeleteParameter">
+		<![CDATA[
+        {call P_DELETE_EMP(?,?,?)}
+    	]]> 
+	</procedure> -->
+
+</mapper>

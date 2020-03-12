@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.base.dao.HolidayDAO">
+
+	<select id="selectHolidayList" resultType="com.google.ybMyboot.base.to.HolidayTO">
+		<![CDATA[
+			SELECT TO_CHAR(APPLY_DAY, 'YYYY-MM-DD') APPLY_DAY
+				  ,HOLIDAY_NAME
+				  ,NOTE
+			FROM HOLIDAY
+        ]]>
+	</select>
+	
+	<select id="selectWeekDayCount" parameterType="HashMap" resultType="com.google.ybMyboot.base.to.HolidayTO">
+		<![CDATA[
+			SELECT WEEKDAY_COUNTING_FUNC(?,?) WEEKDAY_COUNT FROM DUAL
+        ]]>
+	</select>
+	
+	<update id="updateCodeList" parameterType="com.google.ybMyboot.base.to.HolidayTO">
+		<![CDATA[
+			UPDATE HOLIDAY 
+			SET HOLIDAY_NAME = #holidayName#
+			  , NOTE = #{note} 
+			WHERE APPLY_DAY = #{applyDay}
+        ]]>
+	</update>
+	
+	<insert id="insertCodeList" parameterType="com.google.ybMyboot.base.to.HolidayTO">
+		<![CDATA[
+			INSERT INTO HOLIDAY
+			VALUES (  TO_DATE( #{applyDay}, 'YYYY-MM-DD') 
+					, #{holidayName} 
+					, #{note} )
+        ]]>
+	</insert>
+	
+	<delete id="deleteCodeList" parameterType="com.google.ybMyboot.base.to.HolidayTO">
+		<![CDATA[
+			DELETE HOLIDAY
+			WHERE APPLY_DAY = #{applyDay}
+        ]]>
+	</delete>
+	
+</mapper>

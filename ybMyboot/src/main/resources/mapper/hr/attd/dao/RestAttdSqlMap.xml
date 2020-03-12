@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.hr.attd.dao.RestAttdDAO">
+
+
+	<select id="selectRestAttdListByToday" parameterType="HashMap" resultType="com.google.ybMyboot.hr.attd.to.RestAttdTO">
+		<![CDATA[
+			SELECT R.EMP_CODE
+				 , E.EMP_NAME
+				 , R.REST_ATTD_CODE
+				 , R.REST_TYPE_CODE
+				 , R.REST_TYPE_NAME
+				 , TO_CHAR(R.REQUEST_DATE, 'YYYY-MM-DD') REQUEST_DATE
+				 , TO_CHAR(R.START_DATE, 'YYYY-MM-DD') START_DATE
+				 , TO_CHAR(R.END_DATE, 'YYYY-MM-DD') END_DATE
+				 , R.NUMBER_OF_DAYS
+				 , R.COST, R.CAUSE
+				 , R.APPLOVAL_STATUS
+				 , R.REJECT_CAUSE
+				 , R.START_TIME
+				 , R.END_TIME
+			FROM REST_ATTD R
+			   , EMP E WHERE R.EMP_CODE = #{empCode} 
+			AND R.START_DATE = to_DATE( #{toDay} ,'YYYY-MM-DD')
+			AND R.END_DATE = to_DATE( #{toDay} ,'YYYY-MM-DD')
+			AND R.APPLOVAL_STATUS = '승인'
+			AND R.REST_TYPE_CODE <> 'ASC008'
+			AND R.EMP_CODE = E.EMP_CODE
+    	]]>
+	</select>
+	
+	<select id="selectRestAttdList" parameterType="HashMap" resultType="com.google.ybMyboot.hr.attd.to.RestAttdTO">
+		<![CDATA[
+			SELECT R.EMP_CODE
+				 , E.EMP_NAME
+				 , R.REST_ATTD_CODE
+				 , R.REST_TYPE_CODE
+				 , R.REST_TYPE_NAME
+				 , TO_CHAR(R.REQUEST_DATE, 'YYYY-MM-DD') REQUEST_DATE
+				 , TO_CHAR(R.START_DATE, 'YYYY-MM-DD') START_DATE
+				 , TO_CHAR(R.END_DATE, 'YYYY-MM-DD') END_DATE
+				 , R.NUMBER_OF_DAYS
+				 , R.COST, R.CAUSE
+				 , R.APPLOVAL_STATUS
+				 , R.REJECT_CAUSE
+				 , R.START_TIME
+				 , R.END_TIME
+			FROM REST_ATTD R
+			   , EMP E 
+			WHERE R.EMP_CODE = #{empCode} 
+			AND R.REQUEST_DATE BETWEEN TO_DATE( #{startDate} ,'YYYY-MM-DD') 
+								   AND TO_DATE( #{endDate} ,'YYYY-MM-DD')
+			AND R.EMP_CODE = E.EMP_CODE
+    	]]>
+	</select>
+	
+	<select id="selectRestAttdListCode" parameterType="HashMap" resultType="com.google.ybMyboot.hr.attd.to.RestAttdTO">
+		<![CDATA[
+			SELECT R.EMP_CODE
+				 , E.EMP_NAME
+				 , R.REST_ATTD_CODE
+				 , R.REST_TYPE_CODE
+				 , R.REST_TYPE_NAME
+				 , TO_CHAR(R.REQUEST_DATE, 'YYYY-MM-DD') REQUEST_DATE
+				 , TO_CHAR(R.START_DATE, 'YYYY-MM-DD') START_DATE
+				 , TO_CHAR(R.END_DATE, 'YYYY-MM-DD') END_DATE
+				 , R.NUMBER_OF_DAYS
+				 , R.COST, R.CAUSE
+				 , R.APPLOVAL_STATUS
+				 , R.REJECT_CAUSE
+				 , R.START_TIME
+				 , R.END_TIME
+			FROM REST_ATTD R
+			   , EMP E 
+			WHERE R.EMP_CODE = #{empCode}
+			AND R.REQUEST_DATE BETWEEN TO_DATE( #{startDate} ,'YYYY-MM-DD') 
+							 	   AND TO_DATE( #{endDate} ,'YYYY-MM-DD') 
+			AND R.REST_TYPE_CODE = #{code}
+			AND R.EMP_CODE = E.EMP_CODE
+    	]]>
+	</select>
+	
+	<select id="selectRestAttdListByDept" parameterType="HashMap" resultType="com.google.ybMyboot.hr.attd.to.RestAttdTO">
+		<![CDATA[
+			SELECT R.EMP_CODE
+				 , E.EMP_NAME
+				 , R.REST_ATTD_CODE
+				 , R.REST_TYPE_CODE
+				 , R.REST_TYPE_NAME
+				 , TO_CHAR(R.REQUEST_DATE, 'YYYY-MM-DD') REQUEST_DATE
+				 , TO_CHAR(R.START_DATE, 'YYYY-MM-DD') START_DATE
+				 , TO_CHAR(R.END_DATE, 'YYYY-MM-DD') END_DATE
+				 , R.NUMBER_OF_DAYS
+				 , R.COST, R.CAUSE
+				 , R.APPLOVAL_STATUS
+				 , R.REJECT_CAUSE
+				 , R.START_TIME
+				 , R.END_TIME
+			FROM REST_ATTD R
+			   , EMP E 
+			WHERE E.DEPT_CODE = #{deptName}
+			AND R.REQUEST_DATE BETWEEN TO_DATE( #{startDate} ,'YYYY-MM-DD') 
+								   AND TO_DATE( #{endDate} ,'YYYY-MM-DD')
+			AND R.EMP_CODE = E.EMP_CODE
+    	]]>
+	</select>
+	
+	<select id="selectRestAttdListByAllDept" parameterType="String" resultType="com.google.ybMyboot.hr.attd.to.RestAttdTO">
+		<![CDATA[
+			SELECT R.EMP_CODE
+				 , E.EMP_NAME
+				 , R.REST_ATTD_CODE
+				 , R.REST_TYPE_CODE
+				 , R.REST_TYPE_NAME
+				 , TO_CHAR(R.REQUEST_DATE, 'YYYY-MM-DD') REQUEST_DATE
+				 , TO_CHAR(R.START_DATE, 'YYYY-MM-DD') START_DATE
+				 , TO_CHAR(R.END_DATE, 'YYYY-MM-DD') END_DATE
+				 , R.NUMBER_OF_DAYS
+				 , R.COST, R.CAUSE
+				 , R.APPLOVAL_STATUS
+				 , R.REJECT_CAUSE
+				 , R.START_TIME
+				 , R.END_TIME
+			FROM REST_ATTD R
+			   , EMP E 
+			WHERE R.REQUEST_DATE = TO_DATE( #{applyDay} ,'YYYY-MM-DD')
+			AND R.EMP_CODE = E.EMP_CODE
+    	]]>
+	</select>
+	
+	<insert id="insertRestAttd" parameterType="com.google.ybMyboot.hr.attd.to.RestAttdTO">
+		<![CDATA[
+			INSERT INTO REST_ATTD 
+			VALUES ( #{empCode}
+					,REST_ATTD_CODE_SEQ.NEXTVAL
+					,#{restTypeCode, jdbcType=VARCHAR}
+					,#{restTypeName, jdbcType=VARCHAR}
+					,#{requestDate, jdbcType=DATE}
+					,#{startDate, jdbcType=DATE}
+					,#{endDate, jdbcType=DATE}
+					,#{cause, jdbcType=VARCHAR}
+					,#{applovalStatus, jdbcType=VARCHAR}
+					,#{rejectCause, jdbcType=VARCHAR}
+					,#{cost, jdbcType=NUMERIC}
+					,#{startTime, jdbcType=NUMERIC}
+					,#{endTime, jdbcType=NUMERIC}
+					,#{numberOfDays, jdbcType=NUMERIC}
+					)
+    	]]>
+	</insert>
+	
+	<update id="updateRestAttd" parameterType="com.google.ybMyboot.hr.attd.to.RestAttdTO">
+		<![CDATA[
+			UPDATE REST_ATTD
+			SET CAUSE = #{cause}
+			  , APPLOVAL_STATUS = #{applovalStatus}
+			  , REJECT_CAUSE = #{rejectCause}
+			WHERE EMP_CODE = #{empCode}
+			AND REST_ATTD_CODE = #{restAttdCode}
+    	]]>
+	</update>
+	
+	<delete id="deleteRestAttd" parameterType="com.google.ybMyboot.hr.attd.to.RestAttdTO">
+		<![CDATA[
+			DELETE FROM REST_ATTD 
+			WHERE REST_ATTD_CODE = #{restAttdCode}
+    	]]>
+	</delete>
+</mapper>

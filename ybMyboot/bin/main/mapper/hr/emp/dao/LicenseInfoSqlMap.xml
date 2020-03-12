@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.hr.emp.dao.LicenseInfoDAO">
+
+
+	<select id="selectLicenseList" resultType="com.google.ybMyboot.hr.emp.to.LicenseInfoTO"
+		parameterType="string">
+		<![CDATA[
+		SELECT LICENSE_CODE
+		, LICENSE_NAME
+		, LICENSE_LEVEL
+		, LICENSE_CENTER
+		, ISSUE_NUMBER
+		, EMP_CODE
+		, TO_CHAR(GET_DATE, 'YYYY/MM/DD') GET_DATE
+		, TO_CHAR(EXPIRE_DATE, 'YYYY/MM/DD') EXPIRE_DATE
+		FROM LICENSE_INFO 
+		WHERE EMP_CODE = #{code}
+		]]>
+	</select>
+
+	<insert id="insertLicenseInfo" parameterType="com.google.ybMyboot.hr.emp.to.LicenseInfoTO">
+		<![CDATA[
+		INSERT INTO	LICENSE_INFO VALUES (
+		#{empCode}
+		, LICENSE_CODE_SEQ.NEXTVAL
+		, #{licenseName}
+		, TO_DATE(#{getDate}, 'YYYY/MM/DD')
+		, TO_DATE(#{expireDate}, 'YYYY/MM/DD')
+		, #{licenseLevel}
+		, #{licenseCenter}
+		, #{issueNumber}
+		)
+		]]>
+	</insert>
+
+	<update id="updateLicenseInfo" parameterType="com.google.ybMyboot.hr.emp.to.LicenseInfoTO">
+		<![CDATA[
+		UPDATE LICENSE_INFO SET
+		LICENSE_NAME= #{licenseName}
+		, GET_DATE = TO_DATE(#{getDate}, 'YYYY/MM/DD')
+		, EXPIRE_DATE = TO_DATE(#{expireDate}, 'YYYY/MM/DD')
+		, LICENSE_LEVEL = #{licenseLevel}
+		, LICENSE_CENTER = #{licenseCenter}
+		, ISSUE_NUMBER = #{issueNumber}
+		WHERE EMP_CODE = #{empCode} 
+		AND LICENSE_CODE = #{licenseCode}
+		]]>
+	</update>
+
+	<delete id="deleteLicenseInfo" parameterType="com.google.ybMyboot.hr.emp.to.LicenseInfoTO">
+		<![CDATA[
+		DELETE FROM LICENSE_INFO
+		WHERE EMP_CODE = #{empCode}
+		AND LICENSE_INFO = #{licenseCode}
+		]]>
+	</delete>
+
+</mapper>

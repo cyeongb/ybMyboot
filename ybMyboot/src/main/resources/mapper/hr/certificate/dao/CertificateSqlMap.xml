@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.google.ybMyboot.hr.certificate.dao.CertificateDAO">
+
+	
+	<insert id="insertCertificateRequest" parameterType="com.google.ybMyboot.hr.certificate.to.CertificateTO">
+		<![CDATA[
+			INSERT INTO CERTIFICATE 
+			VALUES (#{empCode}
+				  , #{usageCode}
+				  , #{requestDate}
+				  , #{useDate}
+				  , #{approvalStatus}
+				  , null
+				  , #{etc}
+				   )
+    	]]>
+	</insert>
+	
+	<select id="selectCertificateList" parameterType="HashMap" resultType="com.google.ybMyboot.hr.certificate.to.CertificateTO">
+		<![CDATA[
+			SELECT C.EMP_CODE
+				 , C.USAGE_CODE
+				 , D.DETAIL_CODE_NAME
+				 ,TO_CHAR(C.REQUEST_DATE, 'YYYY-MM-DD') REQUEST_DATE
+				 ,TO_CHAR(C.USE_DATE,'YYYY-MM-DD') USE_DATE
+				 ,C.APPROVAL_STATUS
+				 , C.REJECT_CAUSE
+				 , C.ETC
+			FROM CERTIFICATE C
+			   , DETAIL_CODE D
+			WHERE C.USAGE_CODE=D.DETAIL_CODE_NUMBER
+			AND C.EMP_CODE= #{empCode}
+			AND C.REQUEST_DATE BETWEEN TO_DATE( #{startDate} ,'YYYY-MM-DD') 
+								   AND TO_DATE( #{endDate} ,'YYYY-MM-DD')
+    	]]>
+	</select>
+	
+	<delete id="deleteCertificate" parameterType="com.google.ybMyboot.hr.certificate.to.CertificateTO">
+		<![CDATA[
+			DELETE FROM CERTIFICATE WHERE EMP_CODE= #{empCode}# AND REQUEST_DATE=TO_DATE( #{requestDate}# ,'YYYY-MM-DD')
+    	]]>
+	</delete>
+	
+	<select id="selectCertificateListByAllDept" parameterType="String" resultType="com.google.ybMyboot.hr.certificate.to.CertificateTO">
+		<![CDATA[
+			SELECT D.DEPT_NAME
+				 , C.EMP_CODE
+				 , E.EMP_NAME
+				 , C.USAGE_CODE
+				 , DD.DETAIL_CODE_NAME
+				 , TO_CHAR(C.REQUEST_DATE, 'YYYY-MM-DD') REQUEST_DATE
+			     , TO_CHAR(C.USE_DATE, 'YYYY-MM-DD') USE_DATE
+				 , C.APPROVAL_STATUS
+				 , C.REJECT_CAUSE
+				 , C.ETC
+			 FROM CERTIFICATE C
+			 	, EMP E,DEPT D
+			 	, DETAIL_CODE DD
+			 WHERE C.EMP_CODE=E.EMP_CODE(+)
+			 AND E.DEPT_CODE=D.DEPT_CODE(+)
+			 AND C.USAGE_CODE=DD.DETAIL_CODE_NUMBER(+) 
+			 AND REQUEST_DATE=TO_DATE( #{requestDate} ,'yyyy-mm-dd')
+    	]]>
+	</select>
+	
+	<select id="selectCertificateListByDept" parameterType="Hashmap" resultType="com.google.ybMyboot.hr.certificate.to.CertificateTO">
+		<![CDATA[
+			SELECT D.DEPT_NAME
+				 , C.EMP_CODE
+				 , E.EMP_NAME
+				 , C.USAGE_CODE
+				 , DD.DETAIL_CODE_NAME
+				 , TO_CHAR(C.REQUEST_DATE, 'YYYY-MM-DD') REQUEST_DATE
+				 , TO_CHAR(C.USE_DATE, 'YYYY-MM-DD') USE_DATE
+				 , C.APPROVAL_STATUS
+				 , C.REJECT_CAUSE
+				 , C.ETC
+			FROM CERTIFICATE C
+			   , EMP E,DEPT D
+			   , DETAIL_CODE DD
+			WHERE C.EMP_CODE=E.EMP_CODE(+)
+			AND E.DEPT_CODE=D.DEPT_CODE(+)
+			AND C.USAGE_CODE=DD.DETAIL_CODE_NUMBER(+)
+			AND D.DEPT_NAME= #{deptName}
+			AND REQUEST_DATE BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') 
+								 AND TO_DATE( #{endDate} ,'YYYY-MM-DD')
+    	]]>
+	</select>
+	
+	<update id="updateCertificate" parameterType="com.google.ybMyboot.hr.certificate.to.CertificateTO">
+		<![CDATA[
+			UPDATE CERTIFICATE 
+			SET APPROVAL_STATUS= #{approvalStatus},  REJECT_CAUSE= #{rejectCause}
+			WHERE EMP_CODE = #{empCode} AND REQUEST_DATE = TO_DATE( #{requestDate} ,'YYYY-MM-DD')
+    	]]>
+	</update>
+</mapper>

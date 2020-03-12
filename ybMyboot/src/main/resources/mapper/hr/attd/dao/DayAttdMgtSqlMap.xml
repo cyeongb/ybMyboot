@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.hr.attd.dao.DayAttdMgtDAO">
+
+	<parameterMap type="map" id="dayAttdMgtInsertParameter" >
+      <parameter property="applyDay" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+      <parameter property="dept" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+      <parameter property="result" jdbcType="CURSOR" javaType="java.sql.ResultSet" mode="IN" resultMap="dayAttdMgtInsertParameter" />
+    
+      <parameter property="errorCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" />
+      <parameter property="errorMsg" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" />
+	</parameterMap>	
+	
+	<select id="batchDayAttdMgtProcess" parameterMap="dayAttdMgtInsertParameter" resultType="com.google.ybMyboot.hr.attd.to.DayAttdMgtTO" statementType="CALLABLE">
+		<![CDATA[
+        {call P_HR_ATTENDANCE.P_CREATE_DAY_ATTD_MANAGE(TO_DATE(?,'YYYY-MM-DD'),?,?,?,?)}
+    	]]>
+	</select>
+	
+	<update id="updateDayAttdMgtList" parameterType="com.google.ybMyboot.hr.attd.to.DayAttdMgtTO">
+		<![CDATA[
+			UPDATE DAY_ATTD_MANAGE 
+			SET FINALIZE_STATUS = #{finalizeStatus}
+			WHERE EMP_CODE = #{empCode}
+			AND APPLY_DAYS = #{applyDays}
+    	]]>
+	</update>
+</mapper>

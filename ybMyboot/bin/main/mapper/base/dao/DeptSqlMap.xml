@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.base.dao.DeptDAO">
+
+	<select id="selectDeptList" resultType="com.google.ybMyboot.base.to.DeptTO">
+		<![CDATA[
+			SELECT * 
+			FROM DEPT
+			ORDER BY DEPT_CODE
+        ]]>
+	</select>
+	
+	<update id="updateDept" parameterType="com.google.ybMyboot.base.to.DeptTO">
+		<![CDATA[
+			UPDATE DEPT 
+			SET DEPT_NAME = #deptName# , DEPT_TEL = #{deptTel}
+			WHERE DEPT_CODE = #{deptCode} 
+        ]]>
+	</update>
+	
+	<insert id="insertDept" parameterType="com.google.ybMyboot.base.to.DeptTO">
+		<![CDATA[
+			INSERT INTO DEPT VALUES(#{deptCode}, #{deptName}, #{deptTel})
+        ]]>
+	</insert>
+	
+	<delete id="deleteDept" parameterType="com.google.ybMyboot.base.to.DeptTO">
+		<![CDATA[
+			DELETE DEPT 
+			WHERE DEPT_CODE = #{deptCode}
+        ]]>
+	</delete>
+	
+</mapper>

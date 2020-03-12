@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.hr.salary.dao.MonthDeductionDAO">
+	
+	
+	<select id="selectMonthDeductionList" resultType="com.google.ybMyboot.hr.salary.to.MonthDeductionTO" parameterType="map">
+		<![CDATA[
+		SELECT EMP_CODE
+		, APPLY_YEAR_MONTH
+		, DEDUCTION_CODE
+		, DEDUCTION_NAME
+		, PRICE
+		FROM MONTH_DEDUCTION 
+		WHERE APPLY_YEAR_MONTH = #{applyYearMonth}
+		AND EMP_CODE = #{empCode}
+		]]>  
+	</select>
+</mapper>

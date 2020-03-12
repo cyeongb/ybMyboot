@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.google.ybMyboot.hr.salary.dao.BaseExtSalDAO">
+	
+	<select id="selectBaseExtSalList" resultType="com.google.ybMyboot.hr.salary.to.BaseExtSalTO">
+		<![CDATA[
+		select EXT_SAL_CODE
+		, EXT_SAL_NAME
+		, RATIO		
+		FROM BASE_EXT_SAL
+		]]>
+	</select>
+	
+	<update id="updateBaseExtSal" parameterType="com.google.ybMyboot.hr.salary.to.BaseExtSalTO">
+		<![CDATA[
+		UPDATE BASE_EXT_SAL SET 
+		RATIO = #{ratio}
+		WHERE EXT_SAL_CODE = #{extSalCode}
+		]]>
+	</update>
+</mapper>

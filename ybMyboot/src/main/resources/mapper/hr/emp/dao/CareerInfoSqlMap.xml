@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.google.ybMyboot.hr.emp.dao.CareerInfoDAO">
+
+	<select id="selectCareerList" parameterType="String" resultType="com.google.ybMyboot.hr.emp.to.CareerInfoTO"  >
+		<![CDATA[
+			SELECT EMP_CODE
+				 , CAREER_CODE
+				 , COMPANY_NAME
+				 , OCCUPATION
+				 , ASSIGNMENT_TASK
+				 , TO_CHAR(ex_retirement_date,'YYYY/MM/DD') EX_RETIREMENT_DATE
+				 , TO_CHAR(ex_hiredate,'YYYY/MM/DD') EX_HIREDATE
+			FROM CAREER_INFO
+			WEHRE EMP_CODE = #{code}
+    	]]>
+	</select>
+	
+	<insert id="insertCareerInfo" parameterType="com.google.ybMyboot.hr.emp.to.CareerInfoTO" >
+		<![CDATA[
+			INSERT INTO CAREER_INFO 
+			VALUES ( #{empCode}
+				   , CAREER_CODE_SEQ.NEXTVAL
+				   , #{companyName}
+				   , #{occupation}
+				   , #{assignmentTask}
+				   , to_date( #{exHiredate} ,'YYYY/MM/DD')
+				   , to_date( #{exRetirementDate} ,'YYYY/MM/DD')
+				   )
+    	]]>
+	</insert>
+	
+	<update id="updateCareerInfo" parameterType="com.google.ybMyboot.hr.emp.to.CareerInfoTO">
+		<![CDATA[
+			UPDATE CAREER_INFO 
+			SET COMPANY_NAME = #{companyName}
+			  , OCCUPATION = #{occupation}
+			  , ASSIGNMENT_TASK = #{assignmentTask}
+			  , EX_HIREDATE = TO_DATE( #{exHiredate} ,'YYYY/MM/DD')
+			  , EX_RETIREMENT_DATE = TO_DATE( #{exRetirementDate} ,'YYYY/MM/DD')
+			WHERE EMP_CODE = #{empCode} 
+			AND CAREER_CODE = #{careerCode}
+    	]]>
+	</update>
+	
+	<delete id="deleteCareerInfo" parameterType="com.google.ybMyboot.hr.emp.to.CareerInfoTO">
+		<![CDATA[
+			DELETE FROM CAREER_INFO 
+			WHERE EMP_CODE = #{empCode} 
+			AND CAREER_CODE = #{careerCode}
+    	]]>
+	</delete>
+</mapper>

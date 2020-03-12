@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.hr.emp.dao.EducationInfoDAO">
+	
+	<select id="selectEducationList" resultType="com.google.ybMyboot.hr.emp.to.EducationInfoTO"
+		parameterType="string">
+		<![CDATA[
+		SELECT EMP_CODE
+			 , EDUCATION_CODE
+		  	 , SCHOOL_NAME
+			 , MAJOR
+			 , GRADE
+			 , TO_CHAR(ENTRANCE_DATE,'YYYY/MM/DD') ENTRANCE_DATE
+			 , TO_CHAR(GRADUATE_DATE,'YYYY/MM/DD') GRADUATE_DATE
+		FROM EDUCATION_INFO
+		WHERE EMP_CODE = #{code}
+		]]>
+	</select>
+
+	<insert id="insertEducationInfo"
+		parameterType="com.google.ybMyboot.hr.emp.to.EducationInfoTO">
+		<![CDATA[
+		INSERT INTO EDUCATION_INFO VALUES (
+		#{empCode},
+		EDUCATION_CODE_SEQ.NEXTVAL,
+		#{schoolName},
+		#{major},
+		TO_DATE(#{entranceDate},'YYYY/MM/DD'),
+		TO_DATE(#{graduateDate},'YYYY/MM/DD'),
+		#{grade}
+		]]>
+		)
+	</insert>
+
+	<update id="updateEducationInfo"
+		parameterType="com.google.ybMyboot.hr.emp.to.EducationInfoTO">
+		<![CDATA[
+		UPDATE EDUCATION_INFO SET
+		SCHOOL_NAME= #{schoolName} 
+		, MAJOR = #{major}
+		, ENTRANCE_DATE = to_date(#{entranceDate},'YYYY/MM/DD')
+		, GRADUATE_DATE = to_date(#{graduateDate},'YYYY/MM/DD')
+		, GRADE = #{grade}
+		WHERE EMP_CODE = #{empCode}
+		AND EDUCATION_CODE = #{educationCode}
+		]]>
+	</update>
+
+	<delete id="deleteEducationInfo"
+		parameterType="com.google.ybMyboot.hr.emp.to.EducationInfoTO">
+		<![CDATA[
+		DELETE FROM EDUCATION_INFO
+		WHERE EMP_CODE = #{empCode}
+		AND EDUCATION_CODE = #{educationCode}
+		]]>
+	</delete>
+	
+
+</mapper>

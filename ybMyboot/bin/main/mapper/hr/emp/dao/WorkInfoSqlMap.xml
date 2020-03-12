@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.ybMyboot.hr.emp.dao.WorkInfoDAO">
+
+	<select id="selectWorkList" resultType="com.google.ybMyboot.hr.emp.to.WorkInfoTO"
+		parameterType="string">
+		<![CDATA[
+		SELECT EMP_CODE
+		, TO_CHAR(HIREDATE, 'YYYY/MM/DD') HIREDATE
+		, TO_CHAR(RETIRE_DATE, 'YYYY/MM/DD') RETIRE_DATE
+		, OCCUPATION
+		, EMPLOYMENT_TYPE
+		, HOBONG
+		, WORK_INFO_DAYS
+		, POSITION
+		, DEPT_NAME
+		FROM WORK_INFO 
+		WHERE EMP_CODE = #{code}
+		]]>
+	</select>
+
+	<insert id="insertWorkInfo" parameterType="com.google.ybMyboot.hr.emp.to.WorkInfoTO">
+		<![CDATA[
+		INSERT INTO WORK_INFO VALUES (
+		#{empCode}
+		, TO_DATE(#{hiredate}, 'YYYY/MM/DD')
+		, TO_DATE(#{retireDate}, 'YYYY/MM/DD')
+		, #{occupation}
+		, #{employmentType}
+		, #{hobong}
+		, TO_NUMBER(#{workInfoDays})
+		, #{position}
+		, #{deptName}
+		)
+		]]>
+	</insert>
+
+	<update id="updateWorkInfo" parameterType="com.google.ybMyboot.hr.emp.to.WorkInfoTO">
+		<![CDATA[
+		UPDATE WORK_INFO SET
+		HIREDATE = TO_DATE(#{hiredate}, 'YYYY/MM/DD')
+		, RETIRE_DATE= TO_DATE(#{retireDate}, 'YYYY/MM/DD') 
+		, OCCUPATION = #{occupation}
+		, EMPLOYMENT_TYPE = #{employmentType}
+		, HOBONG = #{hobong}
+		, POSITION = #{position}
+		, DEPT_NAME = #{deptName}
+		WHERE EMP_CODE = #{empCode}
+		AND WORK_INFO_DAYS = TO_NUMBER(#{workInfoDays})
+		]]>
+	</update>
+
+	<delete id="deleteWorkInfo" parameterType="com.google.ybMyboot.hr.emp.to.WorkInfoTO">
+		<![CDATA[
+		DELETE FROM WORK_INFO
+		WHERE EMP_CODE = #{empCode}
+		AND WORK_INFO_DAYS = #{workInfoDays}
+		]]>
+	</delete>
+
+
+
+</mapper>
